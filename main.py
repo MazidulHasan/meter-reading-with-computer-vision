@@ -19,7 +19,7 @@ def read_csv(file_path):
     return data
 
 
-# Data processing form raspberry pi
+# Data processing form raspberry pi request
 @app.route('/process_data', methods=['POST'])
 def process_data():
     file_name = request.json.get('file_name')
