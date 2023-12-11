@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Viewer</title>
+    <!-- Google Fonts: Poppins -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,700&display=swap">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-mQ8iDxf2H7s4WKs2KIAir5BUk5b0R8g+CgG6Qo6kG2IYUoXaP3jFJ8yl/9eP4+YL" crossorigin="anonymous">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 20px;
+            background-color: #f8f9fa;
+            color: #343a40;
+        }
+
+        header {
+            background-color: #007bff;
+            padding: 20px;
+            text-align: center;
+            color: #fff;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        nav {
+            background-color: #343a40;
+            padding: 10px;
+            color: #fff;
+            text-align: center;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: 500;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #28a745;
+        }
+
+        main {
+            margin-top: 20px;
+        }
+
+        h1, h2, h3 {
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+
+        canvas {
+            margin-top: 20px;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+        }
+
+        .section {
+            margin-top: 40px;
+        }
+
+        .subsection {
+            margin-top: 20px;
+        }
+
+        .image-container {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .image-card {
+            width: 48%;
+            padding: 20px;
+            border: 1px solid #dee2e6;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+            border-radius: 10px;
+            background-color: #fff;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .image-card:hover {
+            box-shadow: 0 0 15px rgba(0, 123, 255, 0.3);
+        }
+
+        footer {
+            margin-top: 20px;
+            background-color: #343a40;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Data Viewer</h1>
+    </header>
+
+    <nav>
+        <a href="#">Home</a>
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+    </nav>
+
+    <main>
+        <h2>Bar Chart</h2>
+        <canvas id="barChart"></canvas>
+
+        <div class="section">
+            <h2>Computer Vision Overview</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sit amet accumsan nisi.</p>
+        </div>
+
+        <div class="subsection">
+            <h3>Image Processing</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sit amet accumsan nisi.</p>
+        </div>
+
+        <div class="subsection">
+            <h3>Object Detection</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sit amet accumsan nisi.</p>
+        </div>
+
+        <div class="image-container">
+            <div class="image-card">
+                <img src="https://via.placeholder.com/150" alt="Random Image 1">
+                <p>Information about Image 1 processing with computer vision.</p>
+            </div>
+            <div class="image-card">
+                <img src="https://via.placeholder.com/150" alt="Random Image 2">
+                <p>Information about Image 2 processing with computer vision.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        &copy; 2023 Data Viewer. All rights reserved.
+    </footer>
+
+    <script>
+        var chartData = {{ data | tojson | safe }};
+
+        var labels = [];
+        var values = [];
+
+        chartData.forEach(function(row) {
+            labels.push(row['ImageName']);
+            var imageValue = row['ImageValue'];
+            
+            // Remove brackets, commas, and spaces, then convert to integer
+            var cleanedValue = parseInt(imageValue.replace(/[\[\],\s]/g, ''), 10);
+            
+            values.push(cleanedValue);
+        });
+
+        var ctx = document.getElementById('barChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Values',
+                    data: values,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Image Name'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Cleaned Values'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
