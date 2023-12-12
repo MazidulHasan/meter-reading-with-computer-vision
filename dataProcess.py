@@ -1,6 +1,7 @@
 import pyrebase
 import zipfile
 import os
+os.environ['QT_QPA_PLATFORM'] = 'offscreen'
 from combineAll import print_all_digits
 from csvWork.sendCsvToFirebase import uploadCSVToFirebae
 
