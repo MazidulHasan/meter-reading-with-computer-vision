@@ -1,4 +1,6 @@
 import cv2
+cv2.setUseOptimized(True)
+cv2.setNumThreads(4)
 import argparse
 import numpy as np
 from csvWork.saveDataInCSVFile import saveAsCSVFile

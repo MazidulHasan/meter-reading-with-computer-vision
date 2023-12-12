@@ -1,4 +1,6 @@
 import cv2
+cv2.setUseOptimized(True)
+cv2.setNumThreads(4)
 
 def moreRefineImage(imageNmae):
     initial_cropped_image = cv2.imread("inter/"+imageNmae)

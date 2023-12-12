@@ -1,4 +1,6 @@
 import cv2
+cv2.setUseOptimized(True)
+cv2.setNumThreads(4)
 import numpy as np
 import imutils
 from divideROI import moreRefineImage
